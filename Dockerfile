@@ -8,7 +8,8 @@ ENV PYTHONUNBUFFERED 1
 #
 RUN apt-get update
 RUN apt install \
-git 
+git \
+-y vim
 # 
 COPY . /usr/src/app/
 # 
