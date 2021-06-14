@@ -1,4 +1,4 @@
-## Andrii Kovalov Elementary Tasks
+## Andrii Kovalov Cool Scripts
 
 Create Docker image for the project
 ```
