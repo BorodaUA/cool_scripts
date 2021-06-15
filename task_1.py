@@ -72,34 +72,6 @@ class ChessBoard:
             sys.exit()
         return width
 
-    @classmethod
-    def even_row_generator(cls, width):
-        """
-        Return an even row "* * * * " of given width
-        """
-        even_row = []
-        for num in range(width):
-            if num % 2 == 0:
-                even_row.append("*")
-            else:
-                even_row.append(" ")
-        even_row = ''.join(even_row)
-        return even_row
-
-    @classmethod
-    def odd_row_generator(cls, width):
-        """
-        Return an odd row " * * * *" of given width
-        """
-        odd_row = []
-        for num in range(width):
-            if num % 2 == 0:
-                odd_row.append(" ")
-            else:
-                odd_row.append("*")
-        odd_row = ''.join(odd_row)
-        return odd_row
-
     def create_chess_board(self):
         """
         Return a chess board of given height by
@@ -108,8 +80,12 @@ class ChessBoard:
         odd  " * * * *" rows
         """
         result = []
-        even_row = ChessBoard.even_row_generator(self.width)
-        odd_row = ChessBoard.odd_row_generator(self.width)
+        even_row = ''.join(
+            ['*' if i % 2 == 0 else ' ' for i in range(self.width)]
+        )
+        odd_row = ''.join(
+            [' ' if i % 2 == 0 else '*' for i in range(self.width)]
+        )
         for h in range(self.height):
             if h % 2 == 0:
                 result.append(''.join(even_row))
