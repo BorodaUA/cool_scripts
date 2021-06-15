@@ -1,40 +1,12 @@
 import sys
+import argparse
+from argparse import RawTextHelpFormatter
 
 
 class ChessBoard:
     """
     A chess board class
     """
-    HELP_MSG = (
-        "ChessBoard class creates a custom chess board with given \n"
-        "height and width parameters that must be a positive integers \n"
-        "Example: ChessBoard(8,8) \n"
-        "Example: ChessBoard(height=10, width=10) \n"
-        "Example: ChessBoard(12, width=12) \n"
-    )
-    ERROR_MSG = (
-        "Please provide valid integers "
-        "as height and width parameters \n"
-        "Example: ChessBoard(8,8) \n"
-        "Example: ChessBoard(height=10, width=10) \n"
-        "Example: ChessBoard(12, width=12) \n"
-    )
-
-    def __new__(cls, *args, **kwargs):
-        """
-        The new method with validation of the *args, **kwargs
-        """
-        if len(args) == 0 and len(kwargs) == 0:
-            print(cls.HELP_MSG)
-            sys.exit()
-        if len(args) + len(kwargs) > 2:
-            print(cls.ERROR_MSG)
-            sys.exit()
-        if len(args) + len(kwargs) < 2:
-            print(cls.ERROR_MSG)
-            sys.exit()
-        if len(args) != 0 or len(kwargs) != 0:
-            return super().__new__(cls)
 
     def __init__(self, height, width):
         """
@@ -42,35 +14,8 @@ class ChessBoard:
         height: int
         width: int
         """
-        self.height = self.is_valid_height(height)
-        self.width = self.is_valid_width(width)
-        print(self.create_chess_board())
-
-    def is_valid_height(self, height):
-        '''
-        A validation method, checks for int as the variable type
-        and height to be a positive integer
-        '''
-        if type(height) != int:
-            print("Please provide valid integer as height parameter")
-            sys.exit()
-        if height < 0:
-            print("Parameter height must be a positive integer")
-            sys.exit()
-        return height
-
-    def is_valid_width(self, width):
-        '''
-        A validation method, checks for int as the variable type
-        and width to be a positive integer
-        '''
-        if type(width) != int:
-            print("Please provide valid integer as width parameter")
-            sys.exit()
-        if width < 0:
-            print("Parameter width must be a positive integer")
-            sys.exit()
-        return width
+        self.height = height
+        self.width = width
 
     def create_chess_board(self):
         """
@@ -95,5 +40,59 @@ class ChessBoard:
         return result
 
 
-print('ABCDEFGH')
-ChessBoard(8, width=8)
+class ChessBoardGame:
+    FILE_NAME = __file__.split('/')[-1]
+    HELP_MSG = (
+        "*** Welcome to the ChessBoard generator ***\n"
+        "You can generate a chess board with custom height "
+        "and width parameters \n"
+        "height and width parameters that must be a positive integers \n"
+        f"Example: python {FILE_NAME} --height 8 --width 8 \n"
+        f"Example: python {FILE_NAME} -ht 8 -wt 8 \n"
+    )
+
+    @classmethod
+    def is_valid_positive_int(self, value):
+        '''
+        A validation method, checks for int as the variable type
+        and value to be a positive integer
+        '''
+        try:
+            value = int(value)
+            if value < 0:
+                raise argparse.ArgumentTypeError(
+                    f"{value} is not a positive integer"
+                )
+        except ValueError:
+            raise argparse.ArgumentTypeError(
+                f"{value} is not an integer"
+            )
+        return value
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=ChessBoardGame.HELP_MSG,
+        formatter_class=RawTextHelpFormatter,
+    )
+    #
+    parser.add_argument(
+        "-ht",
+        "--height",
+        help='The height of the chess board',
+        type=ChessBoardGame.is_valid_positive_int
+    )
+    parser.add_argument(
+        "-wt",
+        "--width",
+        help='The width of the chess board',
+        type=ChessBoardGame.is_valid_positive_int
+        )
+    args = parser.parse_args()
+    #
+    if not args.height or not args.width:
+        print(ChessBoardGame.HELP_MSG)
+        sys.exit()
+    #
+    chess_board = ChessBoard(height=args.height, width=args.width)
+    print(chess_board.create_chess_board())
