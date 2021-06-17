@@ -19,9 +19,9 @@ class Envelope:
         return self.side_a * self.side_b
 
 
-class EnvelopeAnalyzer:
+class EnvelopesAnalyzer:
     """
-    An EnvelopeAnalyzer class
+    An EnvelopesAnalyzer class
     """
     QUIT_MSG = "Quitting..."
     WELCOME_MSG = (
@@ -37,30 +37,42 @@ class EnvelopeAnalyzer:
     )
 
     @classmethod
-    def input_handler(cls, value, error_msg):
+    def input_start_over_handler(cls, message, error_msg):
         """
         A helper method, that return valid user's input or
         an error message
         """
         while True:
-            what = input(value)
-            if isinstance(what, str):
-                if what.lower() == "q":
+            user_input = input(message)
+            if isinstance(user_input, str):
+                if user_input.lower() == "q":
                     return False
-                if value == EnvelopeAnalyzer.START_OVER_MSG:
-                    if what.lower() == 'y' or what.lower() == 'yes':
-                        return True
-                    elif what.lower() == 'n' or what.lower() == 'no':
-                        return False
-                    else:
-                        print(error_msg)
-                        continue
-            try:
-                what = float(what)
-                if what <= 0:
+                if user_input.lower() == 'y' or user_input.lower() == 'yes':
+                    return True
+                elif user_input.lower() == 'n' or user_input.lower() == 'no':
+                    return False
+                else:
                     print(error_msg)
                     continue
-                return what
+
+    @classmethod
+    def input_envelope_handler(cls, message, error_msg):
+        """
+        A helper method, that return valid user's input or
+        an error message
+        """
+        while True:
+            user_input = input(message)
+            if isinstance(user_input, str):
+                if user_input.lower() == "q":
+                    return False
+            #
+            try:
+                user_input = float(user_input)
+                if user_input <= 0:
+                    print(error_msg)
+                    continue
+                return user_input
             except ValueError:
                 print(error_msg)
 
@@ -70,38 +82,40 @@ class EnvelopeAnalyzer:
         user input and showing the result comparison of two envelopes areas.
         """
         while True:
-            print(EnvelopeAnalyzer.WELCOME_MSG)
-            envelope_1_side_a = EnvelopeAnalyzer.input_handler(
-                value="Please enter Envelope 1 side A: ",
+            print(EnvelopesAnalyzer.WELCOME_MSG)
+            #
+            envelope_1_side_a = EnvelopesAnalyzer.input_envelope_handler(
+                message="Please enter Envelope 1 side A: ",
                 error_msg='Envelope 1 side A must be a positive integer'
             )
             if envelope_1_side_a is False:
-                print(EnvelopeAnalyzer.QUIT_MSG)
+                print(EnvelopesAnalyzer.QUIT_MSG)
                 break
             #
-            envelope_1_side_b = EnvelopeAnalyzer.input_handler(
-                value="Please enter Envelope 1 side B: ",
+            envelope_1_side_b = EnvelopesAnalyzer.input_envelope_handler(
+                message="Please enter Envelope 1 side B: ",
                 error_msg='Envelope 1 side B must be a positive integer'
             )
             if envelope_1_side_b is False:
-                print(EnvelopeAnalyzer.QUIT_MSG)
+                print(EnvelopesAnalyzer.QUIT_MSG)
                 break
             #
-            envelope_2_side_c = EnvelopeAnalyzer.input_handler(
-                value="Please enter Envelope 2 side C: ",
+            envelope_2_side_c = EnvelopesAnalyzer.input_envelope_handler(
+                message="Please enter Envelope 2 side C: ",
                 error_msg='Envelope 2 side C must be a positive integer'
             )
             if envelope_2_side_c is False:
-                print(EnvelopeAnalyzer.QUIT_MSG)
+                print(EnvelopesAnalyzer.QUIT_MSG)
                 break
             #
-            envelope_2_side_d = EnvelopeAnalyzer.input_handler(
-                value="Please enter Envelope 2 side D: ",
+            envelope_2_side_d = EnvelopesAnalyzer.input_envelope_handler(
+                message="Please enter Envelope 2 side D: ",
                 error_msg='Envelope 2 side D must be a positive integer'
             )
             if envelope_2_side_d is False:
-                print(EnvelopeAnalyzer.QUIT_MSG)
+                print(EnvelopesAnalyzer.QUIT_MSG)
                 break
+            #
             envelope_1 = Envelope(
                 side_a=envelope_1_side_a,
                 side_b=envelope_1_side_b
@@ -121,12 +135,13 @@ class EnvelopeAnalyzer:
                     envelope_1.side_a <= envelope_2.side_b
                         ):
                     print(
-                        f'Envelope 1 area is {envelope_1_area}\n'
+                        f'\nEnvelope 1 area is {envelope_1_area}\n'
                         f'Envelope 2 area is {envelope_2_area}\n'
                         'Envelope 2 can fit inside Envelope 1'
                     )
                 else:
-                    print(EnvelopeAnalyzer.CANNOT_FIT_MSG)
+                    print(EnvelopesAnalyzer.CANNOT_FIT_MSG)
+            #
             if envelope_2.side_a >= envelope_1.side_a:
                 if (
                     envelope_2.side_b >= envelope_1.side_b or
@@ -134,21 +149,22 @@ class EnvelopeAnalyzer:
                     envelope_2.side_a <= envelope_1.side_b
                         ):
                     print(
-                        f'Envelope 1 area is {envelope_1_area}\n'
+                        f'\nEnvelope 1 area is {envelope_1_area}\n'
                         f'Envelope 2 area is {envelope_2_area}\n'
                         'Envelope 1 can fit inside Envelope 2'
                     )
                 else:
-                    print(EnvelopeAnalyzer.CANNOT_FIT_MSG)
-            start_over = EnvelopeAnalyzer.input_handler(
-                value=EnvelopeAnalyzer.START_OVER_MSG,
+                    print(EnvelopesAnalyzer.CANNOT_FIT_MSG)
+            #
+            start_over = EnvelopesAnalyzer.input_start_over_handler(
+                message=EnvelopesAnalyzer.START_OVER_MSG,
                 error_msg='Could not recognize that command, please repeat.'
             )
             if start_over is False:
-                print(EnvelopeAnalyzer.QUIT_MSG)
+                print(EnvelopesAnalyzer.QUIT_MSG)
                 break
 
 
 if __name__ == "__main__":
-    game = EnvelopeAnalyzer()
+    game = EnvelopesAnalyzer()
     game.play()
