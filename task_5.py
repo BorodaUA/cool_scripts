@@ -11,6 +11,7 @@ NUMBER_TO_LARGE = (
 NEGATIVE_NUM_MSG = 'Please enter a number greater then zero'
 ZERO = 'ноль'
 
+
 def main():
     '''
     Starting point of the program
