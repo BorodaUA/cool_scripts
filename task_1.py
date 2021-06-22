@@ -40,16 +40,23 @@ class ChessBoard:
         return result
 
 
-class ChessBoardGame:
-    FILE_NAME = __file__.split('/')[-1]
-    HELP_MSG = (
-        "*** Welcome to the ChessBoard generator ***\n"
-        "You can generate a chess board with custom height "
-        "and width parameters \n"
-        "height and width parameters that must be a positive integers \n"
-        f"Example: python {FILE_NAME} --height 8 --width 8 \n"
-        f"Example: python {FILE_NAME} -ht 8 -wt 8 \n"
-    )
+FILE_NAME = __file__.split('/')[-1]
+HELP_MSG = (
+    "*** Welcome to the ChessBoard generator ***\n"
+    "You can generate a chess board with custom height "
+    "and width parameters \n"
+    "height and width parameters that must be a positive integers \n"
+    f"Example: python {FILE_NAME} --height 8 --width 8 \n"
+    f"Example: python {FILE_NAME} -ht 8 -wt 8 \n"
+)
+
+
+def main(height, width):
+    '''
+    Starting point of the program
+    '''
+    chess_board = ChessBoard(height, width)
+    print(chess_board)
 
 
 def is_positive_int(value):
@@ -72,7 +79,7 @@ def is_positive_int(value):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description=ChessBoardGame.HELP_MSG,
+        description=HELP_MSG,
         formatter_class=RawTextHelpFormatter,
     )
     #
@@ -91,8 +98,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #
     if not args.height or not args.width:
-        print(ChessBoardGame.HELP_MSG)
+        print(HELP_MSG)
         sys.exit()
     #
-    chess_board = ChessBoard(height=args.height, width=args.width)
-    print(chess_board)
+    main(height=args.height, width=args.width)
