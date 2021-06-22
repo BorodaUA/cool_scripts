@@ -17,19 +17,19 @@ class ChessBoard:
         self.height = height
         self.width = width
 
-    def create_chess_board(self):
+    def __str__(self):
         """
-        Return a chess board of given height by
+        Return string of a chess board of given height by
         combining:
         even "* * * * " and
         odd  " * * * *" rows
         """
         result = []
         even_row = ''.join(
-            ['*' if i % 2 == 0 else ' ' for i in range(self.width)]
+            ['\u2B1C' if i % 2 == 0 else '\u2B1B' for i in range(self.width)]
         )
         odd_row = ''.join(
-            [' ' if i % 2 == 0 else '*' for i in range(self.width)]
+            ['\u2B1B' if i % 2 == 0 else '\u2B1C' for i in range(self.width)]
         )
         for h in range(self.height):
             if h % 2 == 0:
@@ -95,4 +95,4 @@ if __name__ == "__main__":
         sys.exit()
     #
     chess_board = ChessBoard(height=args.height, width=args.width)
-    print(chess_board.create_chess_board())
+    print(chess_board)
