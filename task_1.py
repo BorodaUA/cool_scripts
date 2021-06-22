@@ -51,23 +51,23 @@ class ChessBoardGame:
         f"Example: python {FILE_NAME} -ht 8 -wt 8 \n"
     )
 
-    @classmethod
-    def is_valid_positive_int(self, value):
-        '''
-        A validation method, checks for int as the variable type
-        and value to be a positive integer
-        '''
-        try:
-            value = int(value)
-            if value < 0:
-                raise argparse.ArgumentTypeError(
-                    f"{value} is not a positive integer"
-                )
-        except ValueError:
+
+def is_positive_int(value):
+    '''
+    A validation func, checks for int as the variable type
+    and value to be a positive integer
+    '''
+    try:
+        value = int(value)
+        if value < 0:
             raise argparse.ArgumentTypeError(
-                f"{value} is not an integer"
+                f"{value} is not a positive integer"
             )
-        return value
+    except ValueError:
+        raise argparse.ArgumentTypeError(
+            f"{value} is not an integer"
+        )
+    return value
 
 
 if __name__ == "__main__":
@@ -80,13 +80,13 @@ if __name__ == "__main__":
         "-ht",
         "--height",
         help='The height of the chess board',
-        type=ChessBoardGame.is_valid_positive_int
+        type=is_positive_int
     )
     parser.add_argument(
         "-wt",
         "--width",
         help='The width of the chess board',
-        type=ChessBoardGame.is_valid_positive_int
+        type=is_positive_int
         )
     args = parser.parse_args()
     #
