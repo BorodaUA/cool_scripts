@@ -10,6 +10,7 @@ NUMBER_TO_LARGE = (
 )
 NEGATIVE_NUM_MSG = 'Please enter a number greater then zero'
 ZERO = 'ноль'
+NOT_INTEGER_MSG = 'Please enter a valid number'
 
 
 def main():
@@ -30,7 +31,7 @@ def main():
         number_inst = NumbersToWords(user_input)
         print(number_inst)
     except ValueError:
-        print('Please enter a valid number')
+        print(NOT_INTEGER_MSG)
 
 
 if __name__ == "__main__":

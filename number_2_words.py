@@ -26,8 +26,7 @@ class NumbersToWords:
         '''
         return f'{self.number:,}'.split(',')
 
-    @classmethod
-    def flatten(cls, incoming_tuple):
+    def flatten(self, incoming_tuple):
         '''
         Unpacking tuples helper
         '''
@@ -39,10 +38,10 @@ class NumbersToWords:
         #
         if isinstance(incoming_tuple[0], tuple):
             return (
-                cls.flatten(incoming_tuple[0]) +
-                cls.flatten(incoming_tuple[1:])
+                self.flatten(incoming_tuple[0]) +
+                self.flatten(incoming_tuple[1:])
                 )
-        return incoming_tuple[:1] + cls.flatten(incoming_tuple[1:])
+        return incoming_tuple[:1] + self.flatten(incoming_tuple[1:])
 
     def __repr__(self):
         '''
@@ -51,7 +50,7 @@ class NumbersToWords:
         ranks = self.ranks
         #
         tuple_of_lists = self.get_words_of_numbers(ranks)
-        tuple_of_lists = NumbersToWords.flatten(tuple_of_lists)
+        tuple_of_lists = self.flatten(tuple_of_lists)
         #
         result_list = []
         for i in tuple_of_lists:
@@ -69,7 +68,7 @@ class NumbersToWords:
         #
         if len(list_of_ranks) == 1:
             first_rank = self.create_list_of_numbers(int(list_of_ranks[0]))
-            first_rank = NumbersToWords.flatten(first_rank)
+            first_rank = self.flatten(first_rank)
             #
             first_rank_words = self.first_rank_convertor(first_rank)
             #
@@ -79,7 +78,7 @@ class NumbersToWords:
         #
         if len(list_of_ranks) == 2:
             second_rank = self.create_list_of_numbers(int(list_of_ranks[0]))
-            second_rank = NumbersToWords.flatten(second_rank)
+            second_rank = self.flatten(second_rank)
             #
             second_rank_words = self.second_rank_convertor(second_rank)
             result_words_list.append(second_rank_words)
@@ -92,7 +91,7 @@ class NumbersToWords:
             return result_words_list
         if len(list_of_ranks) == 3:
             third_rank = self.create_list_of_numbers(int(list_of_ranks[0]))
-            third_rank = NumbersToWords.flatten(third_rank)
+            third_rank = self.flatten(third_rank)
             #
             third_rank_words = self.third_rank_convertor(third_rank)
             result_words_list.append(third_rank_words)
