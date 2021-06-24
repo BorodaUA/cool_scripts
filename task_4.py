@@ -1,34 +1,81 @@
 import sys
 import argparse
-from text_file_parser import FindAndCount, FindAndReplace
 from text_file import TxtFile
 
 
-class FileParser:
+FILE_NAME = __file__.split('/')[-1]
+WELCOME_MSG = (
+    '\n*** Welcome to the file parser program ***\n'
+    "This program have 2 modes:\n"
+    'Mode 1: Find and count how many times '
+    'a "query" appears in the text file\n'
+    'Mode 1 Usage example: \n'
+    f'python {FILE_NAME} -m 1 -f ./big_data.txt -q This \n'
+    f'python {FILE_NAME} --mode 1 --file_path ./big_data.txt'
+    ' --query This \n'
+    '\n'
+    'Mode 2: Find and replace "find_string" with "replace_string"'
+    'in the text file\n'
+    'Mode 2 Usage example: \n'
+    f'python {FILE_NAME} -m 2 -f ./big_data.txt -fs Cat -rs Dog \n'
+    f'python {FILE_NAME} --mode 2 --file_path ./big_data.txt '
+    '--find_string Cat --replace_string Dog\n'
+)
+
+
+def main(**kwargs):
     '''
-    A File parser class
+    Starting point of the program
     '''
-    FILE_NAME = __file__.split('/')[-1]
-    WELCOME_MSG = (
-        '*** Welcome to the file parser program ***\n'
-        "This program have 2 modes:\n"
-        'Mode 1: Find and count how many times '
-        'a "query" appears in the text file\n'
-        'Mode 1 Usage example: \n'
-        f'python {FILE_NAME} -m 1 -f ./big_data.txt -q This \n'
-        f'python {FILE_NAME} --mode 1 --file_path ./big_data.txt'
-        ' --query This \n'
-        '\n'
-        'Mode 2: Find and replace "find_string" with "replace_string"'
-        'in the text file\n'
-        'Mode 2 Usage example: \n'
-        f'python {FILE_NAME} -m 2 -f ./big_data.txt -fs Cat -rs Dog \n'
-        f'python {FILE_NAME} --mode 2 --file_path ./big_data.txt '
-        '--find_string Cat --replace_string Dog'
-    )
+    txt_file = TxtFile()
+    txt_file.set_file_path(kwargs['file_path'])
+    #
+    file_name = kwargs['file_path'].split('/')[-1]
+    #
+    if kwargs['mode'] == 1:
+        #
+        appearance_count = txt_file.count_query_apperance_in_file(
+            query=kwargs['query']
+        )
+        #
+        return (
+                f'Query "{kwargs["query"]}" appears in the "{file_name}" file '
+                f'{appearance_count} time(s).'
+            )
+    #
+    if kwargs['mode'] == 2:
+        #
+        replacement_count = txt_file.find_and_replace_str_in_file(
+            find_string=kwargs['find_string'],
+            replace_string=kwargs['replace_string']
+        )
+        #
+        return (
+                f'"Find string" "{kwargs["find_string"]}" was replaced by '
+                f'"Replace string" "{kwargs["replace_string"]}" '
+                f'{replacement_count} time(s).'
+            )
 
 
 if __name__ == "__main__":
+    # sys.argv += [
+    #     '-m',
+    #     '1',
+    #     '-f',
+    #     './big_data.txt',
+    #     '-q',
+    #     'Dog',
+    # ]
+    # sys.argv += [
+    #     '-m',
+    #     '2',
+    #     '-f',
+    #     '/usr/src/app/big_data.txt',
+    #     '-fs',
+    #     'Cat',
+    #     '-rs',
+    #     'Dog'
+    # ]
     parser = argparse.ArgumentParser()
     #
     parser.add_argument(
@@ -70,59 +117,37 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #
     if len(sys.argv) == 1:
-        print(FileParser.WELCOME_MSG)
+        print(WELCOME_MSG)
         sys.exit()
     #
-    if args.file_path:
-        file_name = args.file_path.split('/')[-1]
-    #
-    file_obj = TxtFile(file_path=args.file_path)
     if args.mode == 1:
         #
         if args.file_path is None or args.query is None:
-            print(FileParser.WELCOME_MSG)
+            print(WELCOME_MSG)
             sys.exit()
         #
-        find_and_count = FindAndCount(
-            file=file_obj,
-            query=args.query
-        )
-        appearance_count = find_and_count.count_query_apperance_in_file
-        #
-        if isinstance(appearance_count, str):
-            print(appearance_count)
-            sys.exit()
-        #
-        if isinstance(appearance_count, int):
-            print(
-                f'Query "{args.query}" appears in the "{file_name}" file '
-                f'{appearance_count} time(s).'
+        print(
+            main(
+                mode=args.mode,
+                file_path=args.file_path,
+                query=args.query
             )
-            sys.exit()
+        )
+    #
     if args.mode == 2:
         #
         if (
             args.file_path is None or args.find_string is None or
             args.replace_string is None
                 ):
-            print(FileParser.WELCOME_MSG)
+            print(WELCOME_MSG)
             sys.exit()
         #
-        find_and_replace = FindAndReplace(
-            file=file_obj,
-            find_string=args.find_string,
-            replace_string=args.replace_string
-        )
-        replacement_count = find_and_replace.find_and_replace_str_in_file()
-        #
-        if isinstance(replacement_count, str):
-            print(replacement_count)
-            sys.exit()
-        #
-        if isinstance(replacement_count, int):
-            print(
-                f'"Find string" "{args.find_string}" was replaced by '
-                f'"Replace string" "{args.replace_string}" '
-                f'{replacement_count} time(s).'
+        print(
+            main(
+                mode=args.mode,
+                file_path=args.file_path,
+                find_string=args.find_string,
+                replace_string=args.replace_string
             )
-            sys.exit()
+        )
