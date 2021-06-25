@@ -1,4 +1,18 @@
-from text_file_reader import TextFileReader
+class TextFileReader:
+    '''
+    A TextFileReader class
+    '''
+    @staticmethod
+    def generate_list_of_strings(text_file, chunk_size=1024):
+        """
+        Helper generator that reads a file and yidld a list
+        of strings one by one till the end of the file
+        """
+        while True:
+            data = text_file.readlines(chunk_size)
+            if not data:
+                break
+            yield data
 
 
 class TicketsFileAnalyzer(TextFileReader):
@@ -49,14 +63,12 @@ class TicketsFileAnalyzer(TextFileReader):
                             if is_lucky is True:
                                 LUCKY_TICKETS_COUNT += 1
         #
-        except PermissionError as e:
-            return str(e)
-        except FileNotFoundError as e:
+        except (PermissionError, FileNotFoundError) as e:
             return str(e)
         return LUCKY_TICKETS_COUNT
 
-    @classmethod
-    def ticket_number_validator(cls, ticket_number):
+    @staticmethod
+    def ticket_number_validator(ticket_number):
         '''
         Check if ticket number is an integer, and it has
         6 digits length

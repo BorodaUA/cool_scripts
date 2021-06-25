@@ -24,14 +24,9 @@ def main(file_path, count_type):
     '''
     Starting point of the program
     '''
-    try:
-        with open(file_path, 'r'):
-            pass
-    except FileNotFoundError as e:
-        print(e)
-        sys.exit()
     #
-    txt_file = TxtFile(file_path=file_path)
+    txt_file = TxtFile()
+    txt_file.set_file_path(file_path)
     #
     tickets_file = TicketsFileAnalyzer(
         file=txt_file,
