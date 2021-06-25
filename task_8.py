@@ -1,6 +1,7 @@
 import argparse
 from argparse import RawTextHelpFormatter
 import sys
+from fibo_range import FiboRange
 
 
 FILE_NAME = __file__.split('/')[-1]
@@ -14,56 +15,14 @@ WELCOME_MSG = (
 )
 
 
-def fibo_range(start_range, end_range):
-    '''
-    Return string of fibonacci sequence in given range
-    '''
-    a = 0
-    b = 1
-    #
-    result = []
-    #
-    while a <= end_range:
-        result.append(a)
-        a, b = b, a+b
-    #
-    start_index = find_index_of_closest_int(result, start_range)
-    #
-    result = [str(i) for i in result[start_index:]]
-    #
-    return ','.join(result)
-
-
 def main(start_range, end_range):
     '''
     Starting point of the program
     '''
-    if end_range <= start_range:
-        print('"end_range" must be greater then "start_range"')
-        sys.exit()
-    print(
-        fibo_range(
-            start_range=start_range,
-            end_range=end_range
-        )
-    )
-
-
-def find_index_of_closest_int(numbers_lst, value):
-    '''
-    Return index of item closest to the value
-    '''
-    min_difference = value
-    min_difference_index = 0
+    my_fibo_range = FiboRange()
+    my_fibo_range.set_range(start_range, end_range)
     #
-    for num in enumerate(numbers_lst):
-        difference = abs(value - num[1])
-        #
-        if min_difference >= difference:
-            min_difference = difference
-            min_difference_index = num[0]
-    #
-    return min_difference_index
+    print(my_fibo_range)
 
 
 def is_valid_positive_int(value):
@@ -107,8 +66,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #
     if args.start_range is None or args.end_range is None:
-        print(WELCOME_MSG)
-        sys.exit()
+        sys.exit(WELCOME_MSG)
     #
     main(
         start_range=args.start_range,
