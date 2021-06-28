@@ -10,15 +10,19 @@ WELCOME_MSG = (
     'Mode 1: Find and count how many times '
     'a "query" appears in the text file\n'
     'Mode 1 Usage example: \n'
-    f'python {FILE_NAME} -m 1 -f ./big_data.txt -q This \n'
-    f'python {FILE_NAME} --mode 1 --file_path ./big_data.txt'
-    ' --query This \n'
+    f'python task_4_file_parser/{FILE_NAME} -m 1 -f '
+    './task_4_file_parser/big_data.txt -q This \n'
+    f'python task_4_file_parser/{FILE_NAME} --mode 1 --file_path '
+    './task_4_file_parser/big_data.txt --query This \n'
     '\n'
     'Mode 2: Find and replace "find_string" with "replace_string"'
     'in the text file\n'
     'Mode 2 Usage example: \n'
-    f'python {FILE_NAME} -m 2 -f ./big_data.txt -fs Cat -rs Dog \n'
-    f'python {FILE_NAME} --mode 2 --file_path ./big_data.txt '
+    f'python task_4_file_parser/{FILE_NAME} -m 2 -f '
+    './task_4_file_parser/big_data.txt '
+    '-fs Cat -rs Dog \n'
+    f'python task_4_file_parser/{FILE_NAME} --mode 2 --file_path '
+    './task_4_file_parser/big_data.txt '
     '--find_string Cat --replace_string Dog\n'
 )
 
@@ -58,24 +62,6 @@ def main(**kwargs):
 
 
 if __name__ == "__main__":
-    # sys.argv += [
-    #     '-m',
-    #     '1',
-    #     '-f',
-    #     './big_data.txt',
-    #     '-q',
-    #     'Dog',
-    # ]
-    # sys.argv += [
-    #     '-m',
-    #     '2',
-    #     '-f',
-    #     '/usr/src/app/big_data.txt',
-    #     '-fs',
-    #     'Cat',
-    #     '-rs',
-    #     'Dog'
-    # ]
     parser = argparse.ArgumentParser()
     #
     parser.add_argument(
