@@ -1,5 +1,5 @@
 import sys
-from number_2_words import NumbersToWords
+from .number_2_words import NumbersToWords
 
 HELP_MSG = (
     '***Welcome to the Numbers 2 Words converter *** \n'

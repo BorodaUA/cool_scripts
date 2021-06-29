@@ -1,4 +1,4 @@
-from num_to_str_storage import (
+from .num_to_str_storage import (
     SINGLE_DIGITS,
     SINGLE_DIGITS_FEMININE,
     DOUBLE_DIGITS,
