@@ -10,13 +10,17 @@ WELCOME_MSG = (
     '\n***Welcome to the Lucky Tickets counter*** \n'
     'This program will help you count how many "lucky tickets" '
     'is in a text file\n'
-    'Usage Examples: \n'
+    '\nUsage Examples: \n'
     'Count type "Moskow": \n'
-    f'python {FILE_NAME} -f ./tickets.txt -ct Moskow \n'
-    f'python {FILE_NAME} --file_path ./tickets.txt --count_type Moskow\n'
-    'Count type "Piter": \n'
-    f'python {FILE_NAME} -f ./tickets.txt -ct Piter\n'
-    f'python {FILE_NAME} --file_path ./tickets.txt --count_type Piter\n'
+    f'python task_6_lucky_tickets/{FILE_NAME} '
+    '-f ./task_6_lucky_tickets/tickets.txt -ct Moskow \n'
+    f'python task_6_lucky_tickets/{FILE_NAME} --file_path '
+    './task_6_lucky_tickets/tickets.txt --count_type Moskow\n'
+    '\nCount type "Piter": \n'
+    f'python task_6_lucky_tickets/{FILE_NAME} '
+    '-f ./task_6_lucky_tickets/tickets.txt -ct Piter\n'
+    f'python task_6_lucky_tickets/{FILE_NAME} '
+    '--file_path ./task_6_lucky_tickets/tickets.txt --count_type Piter\n'
 )
 
 
@@ -35,7 +39,7 @@ def main(file_path, count_type):
     #
     TICKETS_FILE_NAME = file_path.split('/')[-1]
     RESULT_MSG = (
-        f'File {TICKETS_FILE_NAME} was counted by "{count_type}" method '
+        f'File "{TICKETS_FILE_NAME}" was counted by "{count_type}" method '
         f'and it has {tickets_file.lucky_tickets} lucky tickets'
     )
     #
