@@ -13,9 +13,9 @@ WELCOME_MSG = (
     '\nUsage Examples: \n'
     'Count type "Moskow": \n'
     f'python task_6_lucky_tickets/{FILE_NAME} '
-    '-f ./task_6_lucky_tickets/tickets.txt -ct Moskow \n'
+    '-f ./task_6_lucky_tickets/tickets.txt -ct Moscow \n'
     f'python task_6_lucky_tickets/{FILE_NAME} --file_path '
-    './task_6_lucky_tickets/tickets.txt --count_type Moskow\n'
+    './task_6_lucky_tickets/tickets.txt --count_type Moscow\n'
     '\nCount type "Piter": \n'
     f'python task_6_lucky_tickets/{FILE_NAME} '
     '-f ./task_6_lucky_tickets/tickets.txt -ct Piter\n'
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         "-ct",
         "--count_type",
         help='"Lucky ticket" count type',
-        choices=['Moskow', 'Piter'],
+        choices=['Moscow', 'Piter'],
         type=lambda s: s.capitalize()
     )
     #

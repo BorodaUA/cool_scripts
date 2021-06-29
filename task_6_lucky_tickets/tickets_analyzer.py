@@ -50,7 +50,7 @@ class TicketsFileAnalyzer(TextFileReader):
                         )
                         if valid_ticket_number is False:
                             continue
-                        if self.count_type == "Moskow":
+                        if self.count_type == "Moscow":
                             is_lucky = TicketsFileAnalyzer.count_moscow_type(
                                 ticket_number=valid_ticket_number
                             )
