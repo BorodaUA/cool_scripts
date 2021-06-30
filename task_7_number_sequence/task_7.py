@@ -4,7 +4,7 @@ import sys
 from sequence_number import SequenceNumber
 
 
-FILE_NAME = __file__.split('/')[-1]
+FILE_NAME = sys.argv[0]
 WELCOME_MSG = (
     "\n*** Welcome to the Number of squence ***\n"
     "This program will print all the numbers, "
