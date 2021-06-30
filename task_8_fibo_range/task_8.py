@@ -4,7 +4,7 @@ import sys
 from fibo_range import FiboRange
 
 
-FILE_NAME = __file__.split('/')[-1]
+FILE_NAME = FILE_NAME = sys.argv[0]
 WELCOME_MSG = (
     "\n*** Welcome to the Fibonacci numbers for the range ***\n"
     "This program will print all fibonacci numbers, "
