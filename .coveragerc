@@ -1,0 +1,15 @@
+[run]
+source = 
+    ./task_1_chess_board/
+    ./task_2_envelope_analysis/
+    ./task_3_triangles_sorting/
+    ./task_4_file_parser/
+    ./task_5_numbers_convertor/
+    ./task_6_lucky_tickets/
+    ./task_7_number_sequence/
+    ./task_8_fibo_range/
+omit = 
+    ./tests/*
+    */__init__.py
+    ./task_4_file_parser/create_big_data.py
+    ./task_6_lucky_tickets/create_tickets_file.py
