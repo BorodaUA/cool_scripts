@@ -3,15 +3,23 @@ import io
 import pytest
 import random
 from task_5_numbers_convertor.task_5 import main
+from .numbers_2_words_data import NUMBERS_WITH_WORDS
 
 
-def test_input_number_is_valid_int(capsys, monkeypatch):
+@pytest.mark.parametrize(
+    'input_number',
+    NUMBERS_WITH_WORDS
+)
+def test_input_number_is_valid_int(capsys, monkeypatch, input_number):
     '''
     Test numbers convertor with valid int
     '''
-    input_number = '123456789'
     #
-    monkeypatch.setattr(sys, 'stdin', io.StringIO(input_number))
+    monkeypatch.setattr(
+        sys,
+        'stdin',
+        io.StringIO(input_number['number'])
+    )
     #
     main()
     #
@@ -20,8 +28,8 @@ def test_input_number_is_valid_int(capsys, monkeypatch):
     expected_result = (
         '***Welcome to the Numbers 2 Words converter *** \n'
         'Please type in number(s), that will be converted to word(s): '
-        'сто двадцать три миллиона четыреста пятьдесят шесть тысячь '
-        'семьсот восемьдесят девять\n'
+        f'{input_number["words"]}\n'
+
     )
     #
     assert '' == cli_error
@@ -96,3 +104,25 @@ def test_input_number_not_int(capsys, monkeypatch):
     assert '' == cli_error
     assert expected_result == cli_out
 
+
+def test_input_number_negative_int(capsys, monkeypatch):
+    '''
+    Test numbers convertor with negative int
+    '''
+    input_number = str(random.randint(-12345, -1))
+    #
+    monkeypatch.setattr(sys, 'stdin', io.StringIO(input_number))
+    #
+    with pytest.raises(SystemExit):
+        main()
+    #
+    cli_out, cli_error = capsys.readouterr()
+    #
+    expected_result = (
+        '***Welcome to the Numbers 2 Words converter *** \n'
+        'Please type in number(s), that will be converted to word(s): '
+        'Please enter a number greater then zero\n'
+    )
+    #
+    assert '' == cli_error
+    assert expected_result == cli_out
