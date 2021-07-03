@@ -1,4 +1,6 @@
 import random
+import pytest
+from .usage_modes_data import MODES_DICT
 
 
 def task_4_test_file_content(file_obj):
@@ -76,4 +78,47 @@ def test_replace_string_in_file_via_cli_valid_parameters(
         f'"{replace_string}" 100000 time(s).\n'
     )
     #
+    assert expected_result == cli_out
+
+
+@pytest.mark.parametrize('usage_modes', MODES_DICT)
+def test_count_query_appearance_cli_no_parameters(cli_client, usage_modes):
+    '''
+    Test count query in a txt file via cli no parameters
+    '''
+    if usage_modes['mode']:
+        command = (
+            'python',
+            'task_4_file_parser/task_4.py',
+            f'{usage_modes["mode"]}',
+            f'{usage_modes["value"]}'
+        )
+    else:
+        command = (
+                'python',
+                'task_4_file_parser/task_4.py',
+            )
+    cli_out, cli_error, exitcode = cli_client(command)
+    cli_out = cli_out.decode()
+    expected_result = (
+        '\n*** Welcome to the file parser program ***\n'
+        "This program have 2 modes:\n"
+        'Mode 1: Find and count how many times '
+        'a "query" appears in the text file\n'
+        'Mode 1 Usage example: \n'
+        'python task_4_file_parser/task_4.py -m 1 -f '
+        './task_4_file_parser/big_data.txt -q This \n'
+        'python task_4_file_parser/task_4.py --mode 1 --file_path '
+        './task_4_file_parser/big_data.txt --query This \n'
+        '\n'
+        'Mode 2: Find and replace "find_string" with "replace_string"'
+        'in the text file\n'
+        'Mode 2 Usage example: \n'
+        'python task_4_file_parser/task_4.py -m 2 -f '
+        './task_4_file_parser/big_data.txt '
+        '-fs Cat -rs Dog \n'
+        'python task_4_file_parser/task_4.py --mode 2 --file_path '
+        './task_4_file_parser/big_data.txt '
+        '--find_string Cat --replace_string Dog\n\n'
+    )
     assert expected_result == cli_out
