@@ -1,5 +1,7 @@
+import os
 import sys
-from .number_2_words import NumbersToWords
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from number_2_words import NumbersToWords # noqa
 
 HELP_MSG = (
     '***Welcome to the Numbers 2 Words converter *** \n'
