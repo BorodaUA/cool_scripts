@@ -29,6 +29,6 @@ def test_str_chess_board_valid_data():
         '⬛⬜⬛⬜⬛⬜⬛⬜'
     )
     chess_board = ChessBoard(4, 8)
-    str_chess_board = f'{chess_board.__str__()}'
+    str_chess_board = str(chess_board)
     #
     assert expected_chess_board == str_chess_board

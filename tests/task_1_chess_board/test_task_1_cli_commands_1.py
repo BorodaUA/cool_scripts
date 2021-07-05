@@ -21,7 +21,7 @@ def test_chess_board_cli_valid_parameters(cli_client):
     cli_out = cli_out.decode()
     #
     a_chess_board = ChessBoard(chess_board_height, chess_board_width)
-    a_chess_board = f'{a_chess_board.__str__()}\n'
+    a_chess_board = f'{str(a_chess_board)}\n'
     #
     assert 0 == exitcode
     assert b'' == cli_error
@@ -118,7 +118,7 @@ def test_chess_board_cli_height_param_not_int(cli_client):
     cli_out = cli_out.decode()
     #
     a_chess_board = ChessBoard(chess_board_height, chess_board_width)
-    a_chess_board = f'{a_chess_board.__str__()}\n'
+    a_chess_board = f'{str(a_chess_board)}\n'
     #
     ERROR_MSG = (
         b'usage: task_1.py [-h] [-ht HEIGHT] [-wt WIDTH]\n'
@@ -149,11 +149,44 @@ def test_chess_board_cli_width_param_not_int(cli_client):
     cli_out = cli_out.decode()
     #
     a_chess_board = ChessBoard(chess_board_height, chess_board_width)
-    a_chess_board = f'{a_chess_board.__str__()}\n'
+    a_chess_board = f'{str(a_chess_board)}\n'
     #
     ERROR_MSG = (
         b'usage: task_1.py [-h] [-ht HEIGHT] [-wt WIDTH]\n'
         b'task_1.py: error: argument -wt/--width: B is not an integer\n'
+    )
+    #
+    assert 2 == exitcode
+    assert ERROR_MSG == cli_error
+    assert '' == cli_out
+
+
+def test_chess_board_cli_width_param_negative_int(cli_client):
+    '''
+    Test task_1_chess_board/task_1.py -ht INT -wt -10
+    '''
+    chess_board_height = random.randint(1, 25)
+    chess_board_width = random.randint(-111, -1)
+    #
+    command = (
+        'python',
+        'task_1_chess_board/task_1.py',
+        '-ht',
+        f'{chess_board_height}',
+        '-wt',
+        f'{chess_board_width}'
+    )
+    cli_out, cli_error, exitcode = cli_client(command)
+    cli_out = cli_out.decode()
+    cli_error = cli_error.decode()
+    #
+    a_chess_board = ChessBoard(chess_board_height, chess_board_width)
+    a_chess_board = f'{str(a_chess_board)}\n'
+    #
+    ERROR_MSG = (
+        'usage: task_1.py [-h] [-ht HEIGHT] [-wt WIDTH]\n'
+        'task_1.py: error: argument '
+        f'-wt/--width: {chess_board_width} is not a positive integer\n'
     )
     #
     assert 2 == exitcode
